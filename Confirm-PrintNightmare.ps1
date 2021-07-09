@@ -39,7 +39,7 @@ function IsVulnerable {
     elseif ($Option -eq 2) {
         Write-Host "Registry key" $Name "not set" -ForegroundColor Red
     }
-    Read-Host "`nPress any key to exit"
+    Read-Host "`nPress enter to exit"
     exit
 }
 
@@ -152,7 +152,7 @@ if ($spoolerStatus -eq "Running") {
     CheckRegKey -Path $path -Name $name -Reverse $true
 
     Write-Host "This system is protected from PrintNightmare" -ForegroundColor Green
-    Read-Host "`nPress any key to exit"
+    Read-Host "`nPress enter to exit"
 
 } elseif ($spoolerStatus -eq "Stopped") {
     $spoolerStartup = Get-Service Spooler | % { $_.StartType }
@@ -162,10 +162,10 @@ if ($spoolerStatus -eq "Running") {
         Write-Host "Print Spooler Service is stopped but not disabled" -ForegroundColor Yellow
     }
     
-    Read-Host "`nPress any key to exit"
+    Read-Host "`nPress enter to exit"
 
 } else {
     Write-Host "This system is protected from PrintNightmare" -ForegroundColor Green
     Write-Host "Spooler service is paused" -ForegroundColor Yellow
-    Read-Host "`nPress any key to exit"
+    Read-Host "`nPress enter to exit"
 }
