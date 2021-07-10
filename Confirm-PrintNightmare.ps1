@@ -18,6 +18,7 @@ Adam Pumphrey V1.01
 - more descriptive output
 - changed NoWarningNoElevationOnUpdate to UpdatePromptSettings
 - Added check for Print Spooler service status
+- removed useless try-catch block
 
 #>
 function IsVulnerable {
@@ -77,11 +78,11 @@ function CheckRegKey {
         [Parameter(Mandatory = $false)]
         $Reverse = $false
     )
+    $fullPath = $Path + '\' + $Name 
     # check if registry key exists
-    try {
-        $regKeyExists = $null -ne (Get-ItemProperty $Path).$Name
-    } catch {
-        # registry key does not exist (is $null)
+    if ((Get-ItemProperty $Path -ErrorAction SilentlyContinue).$Name -eq $true) {
+        $regKeyExists = $true
+    } else {
         $regKeyExists = $false
     }
     
@@ -97,7 +98,6 @@ function CheckRegKey {
     # if checking for registry key value of 1
     if ($Reverse) {
         if ($regKeyValue -ne 1) {
-            $fullPath = $Path + '\' + $Name 
             # system is vulnerable
             IsVulnerable -Option 2 -Name $fullPath
         }
