@@ -8,14 +8,14 @@ on:
   workflow_dispatch:
     
 jobs:
-  build:
+  test scripts:
+    runs-on: windows-latest
     name: PSScriptAnalyzer
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v2
       - name: Run PSScriptAnalyzer
-        uses: microsoft/psscriptanalyzer-action@2044ae068e37d0161fa2127de04c19633882f061
+        uses: microsoft/psscriptanalyzer-action@v1.0
         with:
           path: .\
           recurse: true 
