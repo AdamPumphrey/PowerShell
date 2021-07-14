@@ -1,5 +1,5 @@
-# Powershell
-Collection of Powershell scripts I created during my time working from May 2021 to Sept 2021
+# PowerShell
+Collection of PowerShell scripts I created from May 2021 to Sept 2021
 
 # Confirm-PrintNightmare.ps1:
 `Confirm-PrintNightmare` checks to see if the local machine is vulnerable to the PrintNightmare exploit ([CVE-2021-34527](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527)) as of July 9, 2021, 12:00am.
