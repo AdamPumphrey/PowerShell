@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     
 jobs:
-  test scripts:
+  test_scripts:
     runs-on: windows-latest
     name: PSScriptAnalyzer
     steps:
