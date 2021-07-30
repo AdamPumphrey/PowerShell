@@ -1,9 +1,9 @@
 <#
 
-Confirm-PrintNightmare V1.01
+Confirm-PrintNightmare V1.02
 Adam Pumphrey
 
-Last updated: 7/9/2021
+Last updated: 7/30/2021
 
 This script checks to see if the local machine's Print Spooler service is running.
 If the service is running, the script checks to see if the machine has the proper 
@@ -20,7 +20,15 @@ Adam Pumphrey V1.01
 - Added check for Print Spooler service status
 - removed useless try-catch block
 
+Adam Pumphrey V1.02
+- added date check for security updates since they are cumulative
+  - a later update will overwrite the actual PrintNightmare patch
+  - the later update includes the PrintNightmare patch
+  - therefore, checking to see if a later security update was installed is sufficient
+- changed "Patch not applied" message
+
 #>
+
 function IsVulnerable {
     <#
     function IsVulnerable
@@ -35,7 +43,7 @@ function IsVulnerable {
     )
     Write-Host "System is vulnerable" -ForegroundColor Red
     if ($Option -eq 1) {
-        Write-Host "Patch not applied" -ForegroundColor Red
+        Write-Host "System has not been patched" -ForegroundColor Red
     }
     elseif ($Option -eq 2) {
         Write-Host "Registry key" $Name "not set" -ForegroundColor Red
@@ -116,7 +124,7 @@ function CheckRegKey {
 $spoolerStatus = Get-Service Spooler | % { $_.Status }
 
 if ($spoolerStatus -eq "Running") {
-    $windowsUpdates = Get-HotFix | % { $_.HotFixID }
+    $windowsUpdates = Get-HotFix
     <#
     reverse array of windows updates since printnightmare fix was recent, therefore it is 
     likely to be near the end (now the beginning), and thus more likely to be found quickly.
@@ -127,12 +135,32 @@ if ($spoolerStatus -eq "Running") {
     # match all possible printnightmare updates
     $regex = "^KB500494[5-8]$|^KB500495[0-13-68-9]$|^KB5004960$"
 
+    # release date of the patch (July 6)
+    $releaseDate = Get-Date 2021/7/6
+    $secDate = Get-Date 1999/12/31
+
     # check to see if any of the installed updates match any printnightmare updates
     $match = $false
     foreach ($update in $windowsUpdates) {
-        if ($update -cmatch $regex) {
+        if ($update.HotFixID -cmatch $regex) {
             $match = $true
             break
+        # if the update is not a match and is a Security Update
+        } elseif ($update.Description -eq "Security Update") {
+            # get update install date
+            if ($update.InstalledOn -ge $secDate) {
+                $secDate = $update.InstalledOn
+            }
+        }
+    }
+
+    if (!$match) {
+        # check if security updates have been installed since the patch release date
+        # since updates are cumulative, later updates include the patch
+        if ($secDate -ge $releaseDate) {
+            # the logic here is that if a security update was installed past the release date of the patch,
+            # that security update will include the patch since updates are cumulative
+            $match = $true
         }
     }
 
