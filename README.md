@@ -5,7 +5,7 @@ Collection of PowerShell scripts I created from May 2021 to Sept 2021
 `Confirm-PrintNightmare` checks to see if the local machine is vulnerable to the PrintNightmare exploit ([CVE-2021-34527](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527)) as of July 9, 2021, 12:00am.
     
 1. The script first checks if the local machine's Print Spooler service is running. 
-    1. If the service is running, the script checks to see if the machine has the proper Microsoft update installed.
+    1. If the service is running, the script checks to see if the machine has the proper Microsoft update installed (or a security update was installed after the patch release date - see my commit [here](https://github.com/AdamPumphrey/PowerShell/commit/15f114d8224e3288e7d426bdf9a484fcb679bf1c) for an explanation why).
         1. If so, the script checks to see if the correct values are set for specific registry keys, if they exist.
 
 If the Print Spooler is not running, the system is safe. If the proper Microsoft update is not installed, the system is vulnerable. If the update is installed, but the specific registry keys (`NoWarningNoElevationOnInstall`, `UpdatePromptSettings`, `RestrictDriverInstallationToAdministrators`) exist and are not set to the correct values, the system is vulnerable.
