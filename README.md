@@ -8,7 +8,7 @@ Collection of PowerShell scripts I created from May 2021 to Sept 2021
     1. If the service is running, the script checks to see if the machine has the proper Microsoft update installed.
         1. If so, the script checks to see if the correct values are set for specific registry keys, if they exist.
 
-If the Print Spooler is not running, the system is safe. If the proper Microsoft update is not installed, the system is vulnerable. If the update is installed, but the specific registry keys (`NoWarningNoElevationOnInstall`, `UpdatePromptSettings`) exist and are not set to the correct values, the system is vulnerable.
+If the Print Spooler is not running, the system is safe. If the proper Microsoft update is not installed, the system is vulnerable. If the update is installed, but the specific registry keys (`NoWarningNoElevationOnInstall`, `UpdatePromptSettings`, `RestrictDriverInstallationToAdministrators`) exist and are not set to the correct values, the system is vulnerable.
 
 Usage: `.\Confirm-PrintNightmare.ps1`
     
