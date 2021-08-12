@@ -25,3 +25,33 @@ The use case for this script was a HR applicant tracking program that needed to 
 6. Finally, the permission specified by `$access` is assigned to the receiving user, and the connection to Exchange Online is terminated.
     
 Usage: `.\Assign-CalendarPermission.ps1` (must change `$newUser` for each different granting user)
+
+# OneDrive:
+
+## Get-PreMigrationReport.ps1
+`Get-PreMigrationReport` creates a .csv file report of a specified user's homedrive.
+
+The use case for this script was when I was overseeing migrations to OneDrive from an on-prem fileshare. This script was used to create reports for each user's homedrive prior to migration. A homedrive refers to the AD property "Home folder" (`homeDirectory` property in an `ADUser` object). In my environment, each user had a homedrive mapped as a network drive (Z:) which they could use for personal storage. As we were moving towards OneDrive, we needed the contents of each homedrive migrated to the corresponding user's OneDrive.
+
+This script loops, allowing for reports to be generated for a number of users, but you have to manually enter the username for each user as it loops, and it only checks one server location.
+
+1. The script requests credentials. These need to be Admin credentials
+2. A `PSSession` is created on the target server
+3. A prompt to enter a username is shown
+4. The path to the user's drive is dynamically created, and the contents of the drive are acquired
+5. The report filename is formatted
+6. Data from each item in the drive is then pulled: file name, last write time, size in MB, file type (extension)
+7. Data for each item is appended to the newly-created .csv report file, saved in the specified location
+8. After the report is complete, a restart prompt is shown
+9. If restarted, process repeats from step 3
+
+Usage: `.\Get-PreMigrationReport.ps1`
+
+## Get-BulkPreMigrationReport.ps1
+`Get-BulkPreMigrationReport` is an improved version of `Get-PreMigrationReport`. The main improvements come from automating the entire process.
+
+I eventually got tired of entering usernames one-by-one, and when I saw that I had large sets of report to make I had to automate it. This script now takes in a `users.csv` file that contains 1 column of data: usernames, with the header being `Folder`. Instead of entering usernames, the script reads the .csv file for the usernames. Additionally, the script checks two specified server locations for the presence of a homedrive (since my environment had two servers for that purpose - this can be easily expanded to more locations). Since the script runs through the `users.csv` file twice (once for each server), the script keeps track of which users have been reported on already and skips them accordingly.
+
+The overall process is the same, just with no user interaction outside of entering Admin credentials.
+
+Usage: `.\Get-BulkPreMigrationReport.ps1` (`users.csv` file must be in the same directory and formatted accordingly)
