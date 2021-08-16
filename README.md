@@ -6,12 +6,12 @@ Collection of PowerShell scripts I created from May 2021 to Sept 2021
     
 The use case for this script was a HR applicant tracking program that needed to be able to view every user's calendar availability. The HR system was an Azure AD-only user, which was assigned `AvailabilityOnly` permissions for every user. This script was used during the account creation process for new users, as the HR system would need permissions for each new user's calendar as well. Hence, it only handles one user at a time, though this could be very easily modified to support multiple users at a time.
     
-1. The script installs the `ExchangeOnlineManagement` module (if not already installed). 
-2. Next, it requests credentials (must be an Exchange Admin) and connects to Exchange Online. 
+1. The script installs the `ExchangeOnlineManagement` module (if not already installed)
+2. Next, it requests credentials (must be an Exchange Admin) and connects to ExchangeOnline
 3. Hard-coded are the values for the user that receives permissions (in the use case this would never change), and the value for the user that is giving permissions (hard coded since its only for one user, and the client was indifferent when I asked if they were fine with this process. For each new user, the value of `$newUser` needs to be changed)
-4. The script then checks to see if any permissions were previously granted for the chosen user.
-    1. If so, the existing permissions are removed.
-6. Finally, the permission specified by `$access` is assigned to the receiving user, and the connection to Exchange Online is terminated.
+4. The script then checks to see if any permissions were previously granted for the chosen user
+    1. If so, the existing permissions are removed
+6. Finally, the permission specified by `$access` is assigned to the receiving user, and the connection to ExchangeOnline is terminated
     
 Usage: `.\Assign-CalendarPermission.ps1` (must change `$newUser` for each different granting user)
 
@@ -51,14 +51,15 @@ The use case for this is simply that a report for every mailbox in the system wa
 
 This script requires Exchange Admin credentials.
 
-1. The script prompts for credentials (must be Exchange Admin)
-2. The script connects to ExchangeOnline and all ExchangeOnline mailboxes are pulled
-3. The report filename is formatted
-4. Data is gathered and formatted for each mailbox, and appended to an array of data objects
-5. After each mailbox has been examined, the report is saved to the location specified by `$reportPath`
-6. The script disconnects from ExchangeOnline
+1. The script installs the `ExchangeOnlineManagement` module (if not already installed)
+2. The script prompts for credentials (must be Exchange Admin)
+3. The script connects to ExchangeOnline and all ExchangeOnline mailboxes are pulled
+4. The report filename is formatted
+5. Data is gathered and formatted for each mailbox, and appended to an array of data objects
+6. After each mailbox has been examined, the report is saved to the location specified by `$reportPath`
+7. The script disconnects from ExchangeOnline
 
-The resulting report is saved in the following format: mailboxreport_month_day_year_time.csv
+The resulting report is saved in the following format: `mailboxreport_month_day_year_time.csv`
 
 Usage: `.\Get-MailboxReport.ps1`
 
