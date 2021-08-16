@@ -35,7 +35,7 @@ The use case for this script was that I was dealing with a M365 group that had c
 2. The existing deleted groups are listed and the user is prompted to enter the name of the deleted group they want to purge
 3. The deleted groups are searched for the previously-entered group name (via `Get-AzureADMSDeletedGroup`)
     1. If no matches are found, the script restarts at step 2
-4. When a match is found, the group is purged (via `Remove-AzureADMSDeletedDirectoryObject)
+4. When a match is found, the group is purged (via `Remove-AzureADMSDeletedDirectoryObject`)
 5. The existing deleted groups are listed again and the user is prompted to confirm that the chosen group was actually deleted
     1. If no, the script restarts at step 2
 
