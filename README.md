@@ -1,16 +1,5 @@
 # PowerShell
 Collection of PowerShell scripts I created from May 2021 to Sept 2021
-
-# Confirm-PrintNightmare.ps1:
-`Confirm-PrintNightmare` checks to see if the local machine is vulnerable to the PrintNightmare exploit ([CVE-2021-34527](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527)) as of July 9, 2021, 12:00am.
-    
-1. The script first checks if the local machine's Print Spooler service is running. 
-    1. If the service is running, the script checks to see if the machine has the proper Microsoft update installed (or a security update was installed after the patch release date - see my commit [here](https://github.com/AdamPumphrey/PowerShell/commit/15f114d8224e3288e7d426bdf9a484fcb679bf1c) for an explanation why).
-        1. If so, the script checks to see if the correct values are set for specific registry keys, if they exist.
-
-If the Print Spooler is not running, the system is safe. If the proper Microsoft update is not installed, the system is vulnerable. If the update is installed, but the specific registry keys (`NoWarningNoElevationOnInstall`, `UpdatePromptSettings`, `RestrictDriverInstallationToAdministrators`) exist and are not set to the correct values, the system is vulnerable.
-
-Usage: `.\Confirm-PrintNightmare.ps1`
     
 # Assign-CalendarPermission.ps1:
 `Assign-CalendarPermission` assigns calendar permissions for one user to another user.
@@ -25,6 +14,35 @@ The use case for this script was a HR applicant tracking program that needed to 
 6. Finally, the permission specified by `$access` is assigned to the receiving user, and the connection to Exchange Online is terminated.
     
 Usage: `.\Assign-CalendarPermission.ps1` (must change `$newUser` for each different granting user)
+
+# Clear-ExternalDrive.ps1:
+`Clear-ExternalDrive` wipes connected hard drives (excluding the C: drive / drive 0) each time a new drive (via USB external drive) is plugged in and detected.
+
+The use case for this script was simply the need to wipe a large amount of hard drives. Instead of plugging in a USB external drive and manually wiping the drives, this script expedites the process by automatically wiping the drive once the USB external drive is connected. Instead of me spending days wiping drives, I had all of the drives wiped in an afternoon.
+
+This script will run continuously until the PowerShell window/process is manually closed.
+
+This script assumes that the host machine only has one drive installed prior to running. If the host machine has more than 1 drive installed (that you don't want to wipe), the `Clear-Disk` command needs to be edited (`-Number` is set to 1 for the script (wipes drive 1), change accordingly).
+
+1. The script self-elevates to Admin PowerShell session (credentials required)
+2. The `volumeChange` event is registered and the script waits for the event to trigger
+3. When the event triggers (i.e. a USB external drive is connected) drive 1 (the new drive) is wiped. Timestamps are created and displayed for the connection time and the time it finishes wiping the drive
+4. Repeats step 2-3 until manually closed
+
+No input needed from the user. Leave the external drive enclosure plugged in, and simply swap in/out hard drives. Power off drive enclosure when swapping of course.
+
+Usage: `.\Clear-ExternalDrive.ps1`
+
+# Confirm-PrintNightmare.ps1:
+`Confirm-PrintNightmare` checks to see if the local machine is vulnerable to the PrintNightmare exploit ([CVE-2021-34527](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527)) as of July 9, 2021, 12:00am.
+    
+1. The script first checks if the local machine's Print Spooler service is running. 
+    1. If the service is running, the script checks to see if the machine has the proper Microsoft update installed (or a security update was installed after the patch release date - see my commit [here](https://github.com/AdamPumphrey/PowerShell/commit/15f114d8224e3288e7d426bdf9a484fcb679bf1c) for an explanation why).
+        1. If so, the script checks to see if the correct values are set for specific registry keys, if they exist.
+
+If the Print Spooler is not running, the system is safe. If the proper Microsoft update is not installed, the system is vulnerable. If the update is installed, but the specific registry keys (`NoWarningNoElevationOnInstall`, `UpdatePromptSettings`, `RestrictDriverInstallationToAdministrators`) exist and are not set to the correct values, the system is vulnerable.
+
+Usage: `.\Confirm-PrintNightmare.ps1`
 
 # Remove-DeletedGroup.ps1:
 `Remove-DeletedGroup` clears a previously deleted Microsoft 365 group from the "deleted groups" in AzureAD.
