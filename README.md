@@ -26,6 +26,21 @@ The use case for this script was a HR applicant tracking program that needed to 
     
 Usage: `.\Assign-CalendarPermission.ps1` (must change `$newUser` for each different granting user)
 
+# Remove-DeletedGroup.ps1:
+`Remove-DeletedGroup` clears a previously deleted Microsoft 365 group from the "deleted groups" in AzureAD.
+
+The use case for this script was that I was dealing with a M365 group that had configuration issues, and I needed to purge it from our infrastructure to rebuild it. Microsoft holds deleted M365 groups in a "deleted groups" folder for 30 days before completely clearing it (similar to how Windows holds items in the Recycle Bin), but manually deleting it (with `Remove-AzureADMSDeletedDirectoryObject`) sets the group to be removed after a maximum of 24 hours (I found that it usually took a couple hours at most for the changes to take effect).
+
+1. The script tries to connect to AzureAD, and prompts for AzureAD Admin credentials
+2. The existing deleted groups are listed and the user is prompted to enter the name of the deleted group they want to purge
+3. The deleted groups are searched for the previously-entered group name (via `Get-AzureADMSDeletedGroup`)
+    1. If no matches are found, the script restarts at step 2
+4. When a match is found, the group is purged (via `Remove-AzureADMSDeletedDirectoryObject)
+5. The existing deleted groups are listed again and the user is prompted to confirm that the chosen group was actually deleted
+    1. If no, the script restarts at step 2
+
+Usage: `.\Remove-DeletedGroup.ps1`
+
 # OneDrive:
 
 ## Get-PreMigrationReport.ps1
