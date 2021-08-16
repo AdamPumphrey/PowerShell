@@ -63,6 +63,27 @@ The resulting report is saved in the following format: `mailboxreport_month_day_
 
 Usage: `.\Get-MailboxReport.ps1`
 
+# Get-NetworkDriveReport.ps1:
+`Get-NetworkDriveReport` generates a report for each drive specified by the accompanying `drives.csv` file. The report for each drive cosists of the number of folders in the drive, number of files in the drive, and the overall size in GB.
+
+The `drives.csv` file contains two columns: the first with a `Server` heading, which consists of the name of the server that the drive is on (eg. Server1), the second with a `Location` heading, which consists of the locations of the drive (eg. D:\Department1\NetDrive1).
+
+The use case for this is simply that a report of each network drive's top-level folders in our infrastructure was requested, with the above fields included. Research was required to find all of the network drive locations (and their top-level folders) in our infrastructure, which was stored in `drives.csv`.
+
+1. The script prompts for credentials (Admin)
+2. The report filename is formatted (`networkdrive_month_day_year_time.csv`)
+3. Following steps are for each entry in `drives.csv`:
+    1. A `PSSession` is established on the server, if not already connected
+    2. All contents of the drive are pulled (`Get-ChildItem`)
+        1. This recurses if inside a top-level folder
+    4. Data is gathered for the contents of the drive (file or folder)
+    5. Resulting data is appended to an array of data objects
+    6. TimeSpan is displayed (time elapsed for that specific drive)
+4.  Data object array is exported as .csv to the path specified by `$reportPath`
+5.  PSSessions are removed
+
+Usage: `.\Get-NetworkDriveReport.ps1` (`drives.csv` must be in same directory and formatted accordingly)
+
 # Remove-DeletedGroup.ps1:
 `Remove-DeletedGroup` clears a previously deleted Microsoft 365 group from the "deleted groups" in AzureAD.
 
