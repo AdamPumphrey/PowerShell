@@ -44,6 +44,24 @@ If the Print Spooler is not running, the system is safe. If the proper Microsoft
 
 Usage: `.\Confirm-PrintNightmare.ps1`
 
+# Get-MailboxReport.ps1:
+`Get-MailboxReport` generates a report for each mailbox in ExchangeOnline. The report for each mailbox consists of the display name (eg. Adam Pumphrey), email address, date and time of the last logon, number of items in the mailbox, the amount of space those items take up, the number of deleted items in the mailbox, and the amount of space the deleted items take up.
+
+The use case for this is simply that a report for every mailbox in the system was requested, with the above fields included.
+
+This script requires Exchange Admin credentials.
+
+1. The script prompts for credentials (must be Exchange Admin)
+2. The script connects to ExchangeOnline and all ExchangeOnline mailboxes are pulled
+3. The report filename is formatted
+4. Data is gathered and formatted for each mailbox, and appended to an array of data objects
+5. After each mailbox has been examined, the report is saved to the location specified by `$reportPath`
+6. The script disconnects from ExchangeOnline
+
+The resulting report is saved in the following format: mailboxreport_month_day_year_time.csv
+
+Usage: `.\Get-MailboxReport.ps1`
+
 # Remove-DeletedGroup.ps1:
 `Remove-DeletedGroup` clears a previously deleted Microsoft 365 group from the "deleted groups" in AzureAD.
 
