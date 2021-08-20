@@ -115,6 +115,9 @@ The use case for this script was that I was dealing with a M365 group that had c
 
 Usage: `.\Remove-DeletedGroup.ps1`
 
+# CreateADUser:
+See CreateADUser/README.md for information.
+
 # OneDrive:
 
 ## Get-PreMigrationReport.ps1
