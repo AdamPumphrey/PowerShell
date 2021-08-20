@@ -116,7 +116,7 @@ The use case for this script was that I was dealing with a M365 group that had c
 Usage: `.\Remove-DeletedGroup.ps1`
 
 # CreateADUser:
-See CreateADUser/README.md for information.
+See [CreateADUser/README.md](https://github.com/AdamPumphrey/PowerShell/blob/main/CreateADUser/README.md) for more information.
 
 # OneDrive:
 
