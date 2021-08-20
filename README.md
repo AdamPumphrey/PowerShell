@@ -84,6 +84,22 @@ The use case for this is simply that a report of each network drive's top-level 
 
 Usage: `.\Get-NetworkDriveReport.ps1` (`drives.csv` must be in same directory and formatted accordingly)
 
+# New-JabberCSV.ps1:
+`New-JabberCSV` reads in two .csv files (one for iPhones, one for Androids) - each formatted to be used for Cisco Jabber - and fills in formatted user data from AD to their corresponding cells.
+
+The use case for this script was simply that a Jabber import file needed to be filled out for every user in AD. Hence, the script pulls each user from AD and fills in a row of the .csv with that user's data. The script requires that two .csv files exist and are properly formatted: `jabber_iphone.csv` and `jabber_android.csv`. The specifics of the .csv formatting will not be shared.
+
+This script requires Admin credentials.
+
+1. The script sets constants and formats the export .csv filenames
+2. The script prompts for credentials (Admin)
+3. A list of AD users is acquired, with the properties `samAccountName`, `Name`, `ipPhone`, `OfficePhone`
+4. the two .csv's are imported (jabber_iphone and jabber_android)
+5. rows of each .csv are filled in with each user's AD data
+6. The created reports are exported
+
+Usage: `.\New-JabberCSV.ps1` (`jabber_iphone.csv` and `jabber_android.csv` must be in same directory and formatted accordingly)
+
 # Remove-DeletedGroup.ps1:
 `Remove-DeletedGroup` clears a previously deleted Microsoft 365 group from the "deleted groups" in AzureAD.
 
