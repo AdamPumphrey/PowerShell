@@ -1,6 +1,8 @@
 # ADUser Script Suite
-A PowerShell module + cmdlets created to expedite the user account creation process in AD, making the process more efficient overall.
+A PowerShell module + cmdlets created to expedite the user account creation process in AD, making the process more efficient overall. The module itself could probably be cleaned up a bit, but it is functional.
+
 This script suite assumes that the `ActiveDirectory` PowerShell module is installed already.
+
 Admin credentials are required.
 
 ## Installation
