@@ -7,6 +7,9 @@ Admin credentials are required.
 
 ## Installation
 1. Download the repository as a `.zip` file (`PowerShell-main.zip`)
+    1. Go to [the repo homepage](https://github.com/AdamPumphrey/PowerShell)
+    2. Click on the green Code button
+    3. Select "Download ZIP"
 2. Place the contents of `PowerShell-main.zip\PowerShell-main\CreateADUser` in your preferred location
 3. Change `$moduleSourcePath` and `$manifestSourcePath` in `CreateADUser.ps1` and `EditADUser.ps1` to reflect their location(s) on your computer specified in step 2. 
 
