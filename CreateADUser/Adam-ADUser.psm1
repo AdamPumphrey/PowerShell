@@ -675,6 +675,9 @@ function Get-Manager {
     param(
         $Manager
     )
+    if ($null -eq $Manager) {
+        return $null
+    }
     # output the Manager property as a string
     $managerString = $Manager | Out-String
     # get the start position of manager's name (always starts with CN=)
