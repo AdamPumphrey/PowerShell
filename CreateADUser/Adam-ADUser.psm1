@@ -168,10 +168,7 @@ function Copy-User {
 
         # read in as secure string, decrypt to plaintext for string comparisons/regex matching
         $accountPassword1 = Read-Host "`nEnter password (or q to cancel)" -AsSecureString #user input
-        if ($accountPassword1 -eq "q") {
-            Read-Host "`nExiting program"
-            Exit
-        }
+        
         # allocates memory for a binary string pointer, copies SecureString to unmanaged binary string
         $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($accountPassword1)
         # copies unmanaged binary string to managed string
@@ -179,15 +176,22 @@ function Copy-User {
         # frees binary string pointer allocated previously
         [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
 
-        $accountPassword2 = Read-Host "Confirm password (or q to cancel)" -AsSecureString #user input - confirming password
-        if ($accountPassword2 -eq "q") { 
+        if ($accountPassword1 -eq "q") {
             Read-Host "`nExiting program"
             Exit
         }
+
+        $accountPassword2 = Read-Host "Confirm password (or q to cancel)" -AsSecureString #user input - confirming password
+        
         $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($accountPassword2)
         $accountPassword2 = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
         [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
         # https://stackoverflow.com/questions/40503240/is-it-possible-to-hide-the-user-input-from-read-host-in-powershell
+
+        if ($accountPassword2 -eq "q") { 
+            Read-Host "`nExiting program"
+            Exit
+        }
 
         # if the passwords entered match each other (case-sensitive)
         if ($accountPassword1 -ceq $accountPassword2) {
