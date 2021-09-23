@@ -33,8 +33,8 @@ Method 2: Manifest file install
 
 Final Tweaks:
 1. in Adam-ADUser.psm1, line 157 (`$userPrincipleName = $samAccountName + "@<domain>"`) change `<domain>` to your desired value
-2. in Adam-ADUser.psm1, line 702 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
-3. in Adam-ADUser.psm1, line 915 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
+2. in Adam-ADUser.psm1, line 706 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
+3. in Adam-ADUser.psm1, line 919 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
 
 I may (and should) change it in the future so that these 3 lines use a variable instead of a hard-coded domain value. It would be less tedious of a process.
 
@@ -62,6 +62,7 @@ The script then jumps into functions contained within `Adam-ADUser.psm1`:
     1. If the generated username already exists, the user is prompted to manually enter a username
 7. User is prompted to enter and confirm a password for the new user
 8. The new user is created in AD, and its information is displayed
+    1. Note that an exception will show if a Manager for the user is not present
 9. User is prompted to confirm the new user's information. If no (n), `EditADUser` is executed for the new user (see the section for `EditADUser.ps1`)
 10. User is prompted to create another user
     1. If yes (y), process repeates at step 3
