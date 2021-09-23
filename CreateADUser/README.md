@@ -22,6 +22,13 @@ Method 2: Manifest file install
 
 `CreateADUser` and `EditADUser` both remove and replace the module manifest (and module, if installation method 1 was used) each time they are ran, which allows for you to edit `Adam-ADUser.psm1` or `Adam-ADUser.psd1` and not have to worry about replacing the old versions in the install location.
 
+Final Tweaks:
+1. in Adam-ADUser.psm1, line 157 (`$userPrincipleName = $samAccountName + "@<domain>"`) change `<domain>` to your desired value
+2. in Adam-ADUser.psm1, line 702 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
+3. in Adam-ADUser.psm1, line 915 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
+
+I may (and should) change it in the future so that these 3 lines use a variable instead of a hard-coded domain value. It would be less tedious of a process.
+
 ## Adam-ADUser.psd1
 Module manifest for the Adam-ADUser.psm1 module. Contains information regarding the module.
 This file is placed in `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\` during the install process.
