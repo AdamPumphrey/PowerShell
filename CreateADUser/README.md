@@ -8,7 +8,13 @@ Admin credentials are required.
 ## Installation
 1. Download the repository as a `.zip` file (`PowerShell-main.zip`)
 2. Place the contents of `PowerShell-main.zip\PowerShell-main\CreateADUser` in your preferred location
-3. Change `$moduleSourcePath` and `$manifestSourcePath` in `CreateADUser.ps1` and `EditADUser.ps1` to reflect their location(s) on your computer
+3. Change `$moduleSourcePath` and `$manifestSourcePath` in `CreateADUser.ps1` and `EditADUser.ps1` to reflect their location(s) on your computer specified in step 2. 
+
+Example: 
+
+`$moduleSourcePath = "C:\Sample Folder\Adam-ADUser.psm1"`
+
+`$manifestSourcePath = "C:\Sample Folder\Adam-ADUser.psd1"`
 
 You then have two choices:
 
