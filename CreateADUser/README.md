@@ -38,6 +38,8 @@ Final Tweaks:
 
 I may (and should) change it in the future so that these 3 lines use a variable instead of a hard-coded domain value. It would be less tedious of a process.
 
+There are arbitrary password length and complexity requirements in this script (15 chars, capitals and lowercase, numbers and special chars. They are located from line 193 to 206 in Adam-ADUser.psm1. The only restriction I would support changing is the password length requirement. The others eliminate simple passwords from being created.
+
 ## Adam-ADUser.psd1
 Module manifest for the Adam-ADUser.psm1 module. Contains information regarding the module.
 This file is placed in `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\` during the install process.
