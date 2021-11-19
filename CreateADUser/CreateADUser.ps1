@@ -62,6 +62,8 @@ $manifestDestPath = "C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\Adam
 $moduleSourcePath = "<module_path>"
 $manifestSourcePath = "<manifest_path>"
 
+$domain = "@<domain>"
+
 # create module directory if it doesn't already exist
 if (!(Test-Path $destPath)) {
     New-Item -ItemType Directory -Path $destPath
@@ -91,10 +93,10 @@ $runStatus = $true
 # while the program is running
 while ($runStatus) {
     # create new user from existing user
-    $newUsername = Copy-User
+    $newUsername = Copy-User -Domain $domain
 
 	# confirm the user's properties
-	Confirm-User -NewUsername $newUsername
+	Confirm-User -NewUsername $newUsername -Domain $domain
 
     $valid = $false
     do {

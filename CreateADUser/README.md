@@ -11,13 +11,16 @@ Admin credentials are required.
     2. Click on the green Code button
     3. Select "Download ZIP"
 2. Place the contents of `PowerShell-main.zip\PowerShell-main\CreateADUser` in your preferred location
-3. Change `$moduleSourcePath` and `$manifestSourcePath` in `CreateADUser.ps1` and `EditADUser.ps1` to reflect their location(s) on your computer specified in step 2. 
+3. Change `$moduleSourcePath` and `$manifestSourcePath` in `CreateADUser.ps1` and `EditADUser.ps1` to reflect their location(s) on your computer specified in step 2.
+4. Change `$domain` in `CreateADUser.ps1` and `EditADUser.ps1` to your respective domain 
 
 Example: 
 
 `$moduleSourcePath = "C:\Sample Folder\Adam-ADUser.psm1"`
 
 `$manifestSourcePath = "C:\Sample Folder\Adam-ADUser.psd1"`
+
+`$domain = "@adam.com"`
 
 You then have two choices:
 
@@ -30,13 +33,6 @@ Method 2: Manifest file install
     1. Upon running `CreateADUser.ps1` or `EditADUser.ps1` the module manifest (`Adam-ADUser.psd1`) will be automatically placed into `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\`
 
 `CreateADUser` and `EditADUser` both remove and replace the module manifest (and module, if installation method 1 was used) each time they are ran, which allows for you to edit `Adam-ADUser.psm1` or `Adam-ADUser.psd1` and not have to worry about replacing the old versions in the install location.
-
-Final Tweaks:
-1. in Adam-ADUser.psm1, line 157 (`$userPrincipleName = $samAccountName + "@<domain>"`) change `<domain>` to your desired value
-2. in Adam-ADUser.psm1, line 706 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
-3. in Adam-ADUser.psm1, line 919 (`$newUserPrincipalName = $newSamAccountName + "@<domain>"`) change `<domain>` to your desired value
-
-I may (and should) change it in the future so that these 3 lines use a variable instead of a hard-coded domain value. It would be less tedious of a process.
 
 There are arbitrary password length and complexity requirements in this script (15 chars, capitals and lowercase, numbers and special chars. They are located from line 193 to 206 in Adam-ADUser.psm1. The only restriction I would support changing is the password length requirement. The others eliminate simple passwords from being created.
 

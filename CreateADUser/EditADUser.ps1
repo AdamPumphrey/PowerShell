@@ -56,6 +56,8 @@ $manifestDestPath = "C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\Adam
 $moduleSourcePath = "<module_path>"
 $manifestSourcePath = "<manifest_path>"
 
+$domain = "@<domain>"
+
 # create module directory if it doesn't already exist
 if (!(Test-Path $destPath)) {
     New-Item -ItemType Directory -Path $destPath
@@ -81,4 +83,4 @@ if ($moduleFound) {
 
 Import-Module -Name "Adam-ADUser" -Force
 
-Edit-User
+Edit-User -Domain $domain

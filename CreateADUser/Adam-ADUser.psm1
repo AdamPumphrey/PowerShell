@@ -25,9 +25,6 @@ Adam Pumphrey V1.01
 #>
 
 function Get-Name {
-    param (
-        $NameStatus
-    )
     <#
     function Get-Name
     This function takes in and validates user input for a new user's name.
@@ -35,6 +32,11 @@ function Get-Name {
     :param: $NameStatus: string, used to change the input string (eg. first, last)
     :return: $nameItem (string)
     #>
+
+    param (
+        $NameStatus
+    )
+    
 
     $validated = $false
     do {
@@ -67,6 +69,10 @@ function Copy-User {
     Input validation and error checking/handling throughout.
     :return: $returnValue (String)
     #>
+
+    param (
+        $Domain
+    )
 
     $validated = $false
     do {
@@ -154,7 +160,8 @@ function Copy-User {
     $mobilePhone = ""
 
     # create unique userPrincipleName (UPN), same as email
-    $userPrincipleName = $samAccountName + "@<domain>"
+    #$userPrincipleName = $samAccountName + "@<domain>"
+    $userPrincipleName = $samAccountName + $Domain
     $emailAddress = $userPrincipleName
 
     # get the OU path, garbageCatch simply catches useless data
@@ -277,7 +284,8 @@ function Confirm-User {
     :param: $NewUsername: string, the username of the newly created user
     #>
     param (
-        $NewUsername
+        $NewUsername,
+        $Domain
     )
 
     $confirmed = $false
@@ -365,7 +373,7 @@ function Confirm-User {
             
             if ($confirmChoice -eq "n") {
                 # start editor
-                $editedUsername = Edit-User -Username $NewUsername -User $newUser -ReturnValue $true
+                $editedUsername = Edit-User -Domain $Domain -Username $NewUsername -User $newUser -ReturnValue $true
 
                 $editedUsername = $editedUsername[1]
 
@@ -702,11 +710,13 @@ function Edit-Username {
     param(
         $changedData,
         $firstName,
-        $lastName
+        $lastName,
+        $Domain
     )
     $newSamAccountName = ($firstName[0] + $lastName).ToLower()
     $changedData["samAccountName"] = $newSamAccountName
-    $newUserPrincipalName = $newSamAccountName + "@<domain>"
+    #$newUserPrincipalName = $newSamAccountName + "@<domain>"
+    $newUserPrincipalName = $newSamAccountName + $Domain
     $newEmailAddress = $newUserPrincipalName
     # $newHomeDirectory = "<home_path>" + $newSamAccountName
     $changedData["UserPrincipalName"] = $newUserPrincipalName
@@ -757,6 +767,7 @@ function Edit-User {
     :return: $User: ADUser Object, the user to be edited (optional)
     #>
     param (
+        $Domain,
         [Parameter(Mandatory = $false)]
         $Username = $false,
         [Parameter(Mandatory = $false)]
@@ -869,7 +880,7 @@ function Edit-User {
                     $changedData = Add-NewFullName -UserFirstname $newFirstName -UserLastName $User.Surname -HashTable $changedData
                     # update username for new name
                     $names = $changedData["Name"].Split(' ')
-                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1]
+                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
                 }
 
                 else {
@@ -894,7 +905,7 @@ function Edit-User {
                     $changedData = Add-NewFullName -UserFirstname $User.GivenName -UserLastName $newLastName -HashTable $changedData
                     # update username for new name
                     $names = $changedData["Name"].Split(' ')
-                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1]
+                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
                 }
 
                 else {
@@ -919,7 +930,8 @@ function Edit-User {
                     $newSamAccountName = Confirm-Username -Username $newSamAccountName
                     $changedData["samAccountName"] = $newSamAccountName
                     # update dependents to match new username
-                    $newUserPrincipalName = $newSamAccountName + "@<domain>"
+                    #$newUserPrincipalName = $newSamAccountName + "@<domain>"
+                    $newUserPrincipalName = $newSamAccountName + $Domain
                     $newEmailAddress = $newUserPrincipalName
                     # $newHomeDirectory = "<home_path>" + $newSamAccountName
                     $changedData["UserPrincipalName"] = $newUserPrincipalName
