@@ -26,7 +26,7 @@ You then have two choices:
 
 Method 1: Module file install
 1. Copy and paste `Adam-ADUser.psm1` into `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\`
-    1. Upon running `CreateADUser.ps1` or `EditADUser.ps1` the module (`Adam-ADUser.psm1`) and the manifest (`Adam-ADUser.psd1`) will be automatically placed into `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\`
+    1. Upon running `CreateADUser.ps1` or `EditADUser.ps1` the manifest (`Adam-ADUser.psd1`) will be automatically placed into `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\` alongside the module (`Adam-ADUser.psm1`), which is already present
 
 Method 2: Manifest file install
 1. Edit the `RootModule` value (line 12) of `Adam-ADUser.psd1` to the path of `Adam-ADuser.psm1` on your computer (same as `$moduleSourcePath`)
