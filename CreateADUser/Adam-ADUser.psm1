@@ -879,8 +879,8 @@ function Edit-User {
                     # update full name
                     $changedData = Add-NewFullName -UserFirstname $newFirstName -UserLastName $User.Surname -HashTable $changedData
                     # update username for new name
-                    $names = $changedData["Name"].Split(' ')
-                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
+                    #$names = $changedData["Name"].Split(' ')
+                    #$changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
                 }
 
                 else {
@@ -904,8 +904,8 @@ function Edit-User {
                     # update full name
                     $changedData = Add-NewFullName -UserFirstname $User.GivenName -UserLastName $newLastName -HashTable $changedData
                     # update username for new name
-                    $names = $changedData["Name"].Split(' ')
-                    $changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
+                    #$names = $changedData["Name"].Split(' ')
+                    #$changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
                 }
 
                 else {
