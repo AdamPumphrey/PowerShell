@@ -5,6 +5,8 @@ This script suite assumes that the `ActiveDirectory` PowerShell module is instal
 
 Admin credentials are required.
 
+There are arbitrary password length and complexity requirements in this script (15 chars, capitals and lowercase, numbers and special chars. They are located from line 193 to 206 in Adam-ADUser.psm1. The only restriction I would support changing is the password length requirement. The others eliminate simple passwords from being created.
+
 ## Installation
 1. Download the repository as a `.zip` file (`PowerShell-main.zip`)
     1. Go to [the repo homepage](https://github.com/AdamPumphrey/PowerShell)
@@ -33,8 +35,6 @@ Method 2: Manifest file install
     1. Upon running `CreateADUser.ps1` or `EditADUser.ps1` the module manifest (`Adam-ADUser.psd1`) will be automatically placed into `C:\Program Files\WindowsPowerShell\Modules\Adam-ADUser\`
 
 `CreateADUser` and `EditADUser` both remove and replace the module manifest (and module, if installation method 1 was used) each time they are ran, which allows for you to edit `Adam-ADUser.psm1` or `Adam-ADUser.psd1` and not have to worry about replacing the old versions in the install location.
-
-There are arbitrary password length and complexity requirements in this script (15 chars, capitals and lowercase, numbers and special chars. They are located from line 193 to 206 in Adam-ADUser.psm1. The only restriction I would support changing is the password length requirement. The others eliminate simple passwords from being created.
 
 ## Adam-ADUser.psd1
 Module manifest for the Adam-ADUser.psm1 module. Contains information regarding the module.
