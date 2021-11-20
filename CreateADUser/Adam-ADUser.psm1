@@ -877,7 +877,11 @@ function Edit-User {
                 if ($newFirstName) {
                     $changedData["GivenName"] = $newFirstName
                     # update full name
-                    $changedData = Add-NewFullName -UserFirstname $newFirstName -UserLastName $User.Surname -HashTable $changedData
+                    if ($changedData["Surname"]) {
+                    $changedData = Add-NewFullName -UserFirstname $newFirstName -UserLastName $changedData["Surname"] -HashTable $changedData
+                    } else {
+                        $changedData = Add-NewFullName -UserFirstname $newFirstName -UserLastName $User.Surname -HashTable $changedData
+                    }
                     # update username for new name
                     #$names = $changedData["Name"].Split(' ')
                     #$changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
@@ -902,7 +906,11 @@ function Edit-User {
                 if ($newLastName) {
                     $changedData["Surname"] = $newLastName
                     # update full name
-                    $changedData = Add-NewFullName -UserFirstname $User.GivenName -UserLastName $newLastName -HashTable $changedData
+                    if ($changedData["GivenName"]) {
+                        $changedData = Add-NewFullName -UserFirstname $changedData["GivenName"] -UserLastName $newLastName -HashTable $changedData
+                    } else {
+                        $changedData = Add-NewFullName -UserFirstname $User.GivenName -UserLastName $newLastName -HashTable $changedData
+                    }
                     # update username for new name
                     #$names = $changedData["Name"].Split(' ')
                     #$changedData = Edit-Username -changedData $changedData -firstName $names[0] -lastName $names[1] -Domain $Domain
